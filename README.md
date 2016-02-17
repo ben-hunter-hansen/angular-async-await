@@ -56,14 +56,14 @@ export default SampleViewCtrl;
 
 ## Getting started
 
-1. Install the package
+1.)  Install the package
 ```
 npm install angular-async-await
 ```
 
-2. Import the module
+2.) Import the module
 ```javascript
 import "angular-async-await";
 ```
 
-3. Include the ```$async``` service when required (typically in a controller and/or directive).
+3.) Include the ```$async``` service when required (typically in a controller and/or directive).
