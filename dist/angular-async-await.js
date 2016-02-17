@@ -42,7 +42,7 @@ var $async = ['$rootScope', function ($rootScope) {
   "use strict";
 
   return function (cb) {
-    return (function () {
+    return function () {
       var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
         var _args = arguments;
         return _regenerator2.default.wrap(function _callee$(_context) {
@@ -65,7 +65,7 @@ var $async = ['$rootScope', function ($rootScope) {
       return function (_x) {
         return ref.apply(this, arguments);
       };
-    })();
+    }();
   };
 }];
 
