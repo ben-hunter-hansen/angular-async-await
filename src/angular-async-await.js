@@ -33,5 +33,5 @@ let $async = ['$rootScope', ($rootScope) => {
   };
 }];
 
-export default angular.module('angular.async', [])
+export default angular.module('angular-async-await', [])
   .factory('$async', $async)

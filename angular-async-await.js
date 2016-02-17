@@ -69,4 +69,4 @@ var $async = ['$rootScope', function ($rootScope) {
   };
 }];
 
-exports.default = angular.module('angular.async', []).factory('$async', $async);
+exports.default = angular.module('angular-async-await', []).factory('$async', $async);

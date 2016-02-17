@@ -1,26 +1,30 @@
-# angular.async
+# angular-async-await
 
-* Use ES7 async/await syntax with angular 1.x
+
+## Examples
 
 SampleViewCtrl.js
 ```javascript
 "use strict";
 
-let SampleViewCtrl = ['DummyService','$async', function(DummyService, $async) {
+let SampleViewCtrl = ['DummyService', '$async', function (DummyService, $async) {
   let vm = this;
   vm.user = {};
   vm.onlineNow = [];
 
-  async function getViewModel() {
-    let model = await DummyService.getAll();
+  vm.getUser = $async(async function (userName) {
+    vm.user = await DummyService.getUser(userName);
+  });
 
-    vm.user = model.user;
-    vm.onlineNow = model.online;
-  }
+  vm.getUsersOnline = $async(async function() {
+    vm.onlineNow = await DummyService.getUsersOnline();
+  });
 
-  $async.register('getViewModel', getViewModel);
-  $async.invokeAll();  // Init view model
+  vm.getUser("Ben Hansen");
+  vm.getUsersOnline();
 }];
+
+export default SampleViewCtrl;
 ```
 
 DummyService.js
@@ -31,8 +35,14 @@ DummyService.js
 let DummyService = ['$http', ($http) => {
   let service = {};
 
-  service.getCurrentUser = async function() {
-    let future = await $http.get('http://localhost:3000/user');
+  service.getUser = async function(userName) {
+    let config = {
+      params: {
+        name: userName
+      }
+    };
+
+    let future = await $http.get('http://localhost:3000/user', config);
     return future.data.user;
   };
 
@@ -41,14 +51,9 @@ let DummyService = ['$http', ($http) => {
     return future.data.users;
   };
 
-  service.getAll = async function() {
-    let userFuture = await service.getCurrentUser();
-    let onlineFuture = await service.getUsersOnline();
-
-    return {user: userFuture, online: onlineFuture};
-  };
-
   return service;
 }];
+
+export default DummyService;
 
 ```
