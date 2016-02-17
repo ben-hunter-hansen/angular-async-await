@@ -1,6 +1,6 @@
 {
   "name": "angular-async-await",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Use ES7 async/await syntax with angular 1.x",
   "main": "angular-async-await.js",
   "scripts": {
