@@ -22,9 +22,6 @@
  SOFTWARE.
  */
 
-
-import "babel-polyfill";
-
 let $async = ['$rootScope', ($rootScope) => {
   "use strict";
 
