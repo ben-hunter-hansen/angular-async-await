@@ -22,13 +22,22 @@
  SOFTWARE.
  */
 
-let $async = ['$rootScope', ($rootScope) => {
+import angular from "angular";
+
+let $async = ['$rootScope','$log', ($rootScope, $log) => {
   "use strict";
 
   return cb => {
-    return async function (...args) {
-      await cb(...args);
-      $rootScope.$apply();
+    if(typeof cb !== 'function')
+      $log.warn(`$async expects a function argument, got ${typeof cb}`);
+    else return async function (...args) {
+      try {
+        await cb(...args);
+      } catch(e) {
+        $log.error(e);
+      } finally {
+        $rootScope.$apply();
+      }
     }
   };
 }];
