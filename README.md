@@ -36,57 +36,34 @@ vm.getUser = async function(userName) {
 Let ```$async``` take care of it for you.
 
 
-SampleViewCtrl.js
 ```javascript
 "use strict";
 
 let SampleViewCtrl = ['DummyService', '$async', function (DummyService, $async) {
   let vm = this;
   vm.user = {};
-  vm.onlineNow = [];
 
   vm.getUser = $async(async function (userName) {
     vm.user = await DummyService.getUser(userName);
+    // vm.user is now updated in the view
   });
-
-  vm.getUsersOnline = $async(async function() {
-    vm.onlineNow = await DummyService.getUsersOnline();
-  });
-
+  
   vm.getUser("Ben Hansen");
-  vm.getUsersOnline();
 }];
 
 export default SampleViewCtrl;
 ```
 
-DummyService.js
-```javascript
+## Getting started
 
-"use strict";
-
-let DummyService = ['$http', ($http) => {
-  let service = {};
-
-  service.getUser = async function(userName) {
-    let config = {
-      params: {
-        name: userName
-      }
-    };
-
-    let future = await $http.get('http://localhost:3000/user', config);
-    return future.data.user;
-  };
-
-  service.getUsersOnline = async function() {
-    let future = await $http.get('http://localhost:3000/online');
-    return future.data.users;
-  };
-
-  return service;
-}];
-
-export default DummyService;
-
+1.)  Install the package
 ```
+npm install angular-async-await
+```
+
+2.) Import the module
+```javascript
+import "angular-async-await";
+```
+
+3.) Include the ```$async``` service when required (typically in a controller and/or directive).
