@@ -26,9 +26,9 @@ will fix that problem, but then you end up with stuff like this everywhere:
 
 ```javascript
 vm.getUser = async function(userName) {
-    vm.user = await UserService.getUser(userName);
-    $scope.$apply();  // don't forget this!
-  }
+  vm.user = await UserService.getUser(userName);
+  $scope.$apply();  // don't forget this!
+}
 ```
 
 ## The solution.
@@ -55,6 +55,10 @@ export default SampleViewCtrl;
 ```
 
 ## Getting started
+**NOTE**: This module assumes you already have babel configured
+properly for async/await support.  Take a look at this projects
+.babelrc file for a list of the required plugins.
+
 
 1.)  Install the package
 ```
@@ -66,4 +70,11 @@ npm install angular-async-await
 import "angular-async-await";
 ```
 
-3.) Include the ```$async``` service when required (typically in a controller and/or directive).
+3.) Add the module to your apps dependency list
+```javascript
+angular.module('myApp', [
+  'angular-async-await'
+])
+```
+
+4.) Inject the ```$async``` service when required (typically in a controller and/or directive).
