@@ -1,92 +1,103 @@
-'use strict';
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(['exports', 'babel-runtime/helpers/typeof', 'babel-runtime/regenerator', 'babel-runtime/helpers/asyncToGenerator'], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require('babel-runtime/helpers/typeof'), require('babel-runtime/regenerator'), require('babel-runtime/helpers/asyncToGenerator'));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global._typeof, global.regenerator, global.asyncToGenerator);
+    global.angularAsyncAwait = mod.exports;
+  }
+})(this, function (exports, _typeof2, _regenerator, _asyncToGenerator2) {
+  'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 
-var _regenerator = require('babel-runtime/regenerator');
+  var _typeof3 = _interopRequireDefault(_typeof2);
 
-var _regenerator2 = _interopRequireDefault(_regenerator);
+  var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+  var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
 
-var _typeof2 = require('babel-runtime/helpers/typeof');
+  /**
+   * angular-async-await.js
+   *
+   * Summary: This module provides a service
+   * that wraps user defined async functions,
+   * and allows them to await operations that update
+   * the view model without needing to manually trigger
+   * a $digest cycle.
+   *
+   * Created by Ben Hansen on 2/16/16.
+   *
+   * To report an issue, please visit:
+   * https://github.com/ben-hunter-hansen/angular-async-await/issues
+   *
+   */
 
-var _typeof3 = _interopRequireDefault(_typeof2);
+  var $async = ['$rootScope', '$log', function ($rootScope, $log) {
+    "use strict";
 
-var _angular = require('angular');
+    return function (cb) {
 
-var _angular2 = _interopRequireDefault(_angular);
+      var validArgument = typeof cb === 'function';
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+      var wrapperFn = function () {
+        var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+          var _args = arguments;
+          return _regenerator2.default.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.prev = 0;
+                  _context.next = 3;
+                  return cb.apply(undefined, _args);
 
-var $async = ['$rootScope', '$log', function ($rootScope, $log) {
-  "use strict";
+                case 3:
+                  _context.next = 8;
+                  break;
 
-  return function (cb) {
-    if (typeof cb !== 'function') $log.warn('$async expects a function argument, got ' + (typeof cb === 'undefined' ? 'undefined' : (0, _typeof3.default)(cb)));else return function () {
-      var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
-        var _args = arguments;
-        return _regenerator2.default.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return cb.apply(undefined, _args);
+                case 5:
+                  _context.prev = 5;
+                  _context.t0 = _context['catch'](0);
 
-              case 3:
-                _context.next = 8;
-                break;
+                  $log.error(_context.t0);
 
-              case 5:
-                _context.prev = 5;
-                _context.t0 = _context['catch'](0);
+                case 8:
+                  _context.prev = 8;
 
-                $log.error(_context.t0);
+                  $rootScope.$apply();
+                  return _context.finish(8);
 
-              case 8:
-                _context.prev = 8;
-
-                $rootScope.$apply();
-                return _context.finish(8);
-
-              case 11:
-              case 'end':
-                return _context.stop();
+                case 11:
+                case 'end':
+                  return _context.stop();
+              }
             }
-          }
-        }, _callee, this, [[0, 5, 8, 11]]);
-      }));
-      return function (_x) {
-        return ref.apply(this, arguments);
-      };
-    }();
-  };
-}]; /**
-     The MIT License (MIT)
-    
-     Copyright (c) 2016 Benjamin Hunter Hansen
-    
-     Permission is hereby granted, free of charge, to any person obtaining a copy
-     of this software and associated documentation files (the "Software"), to deal
-     in the Software without restriction, including without limitation the rights
-     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-     copies of the Software, and to permit persons to whom the Software is
-     furnished to do so, subject to the following conditions:
-    
-     The above copyright notice and this permission notice shall be included in all
-     copies or substantial portions of the Software.
-    
-     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-     AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-     SOFTWARE.
-     */
+          }, _callee, this, [[0, 5, 8, 11]]);
+        }));
+        return function wrapperFn(_x) {
+          return ref.apply(this, arguments);
+        };
+      }();
 
-exports.default = _angular2.default.module('angular-async-await', []).factory('$async', $async);
+      if (!validArgument) {
+        $log.error('$async expects a function argument, got ' + (typeof cb === 'undefined' ? 'undefined' : (0, _typeof3.default)(cb)));
+      }
+
+      return validArgument ? wrapperFn : function () {/* noop */};
+    };
+  }];
+
+  exports.default = angular.module('angular-async-await', []).factory('$async', $async);
+});

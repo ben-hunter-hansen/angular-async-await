@@ -1,36 +1,28 @@
 /**
- The MIT License (MIT)
-
- Copyright (c) 2016 Benjamin Hunter Hansen
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
+ * angular-async-await.js
+ *
+ * Summary: This module provides a service
+ * that wraps user defined async functions,
+ * and allows them to await operations that update
+ * the view model without needing to manually trigger
+ * a $digest cycle.
+ *
+ * Created by Ben Hansen on 2/16/16.
+ *
+ * To report an issue, please visit:
+ * https://github.com/ben-hunter-hansen/angular-async-await/issues
+ *
  */
 
-import angular from "angular";
 
 let $async = ['$rootScope','$log', ($rootScope, $log) => {
   "use strict";
 
   return cb => {
-    if(typeof cb !== 'function')
-      $log.warn(`$async expects a function argument, got ${typeof cb}`);
-    else return async function (...args) {
+
+    let validArgument = (typeof cb === 'function');
+
+    let wrapperFn = async function(...args) {
       try {
         await cb(...args);
       } catch(e) {
@@ -38,7 +30,13 @@ let $async = ['$rootScope','$log', ($rootScope, $log) => {
       } finally {
         $rootScope.$apply();
       }
+    };
+
+    if(!validArgument) {
+      $log.error(`$async expects a function argument, got ${typeof cb}`);
     }
+
+    return validArgument ? wrapperFn : () => {/* noop */}
   };
 }];
 
