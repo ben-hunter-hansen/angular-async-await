@@ -52,7 +52,7 @@
 
       var validArgument = typeof cb === 'function';
 
-      var wrapperFn = function () {
+      var wrapper = function () {
         var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
           var _args = arguments;
           return _regenerator2.default.wrap(function _callee$(_context) {
@@ -86,7 +86,7 @@
             }
           }, _callee, this, [[0, 5, 8, 11]]);
         }));
-        return function wrapperFn(_x) {
+        return function wrapper(_x) {
           return ref.apply(this, arguments);
         };
       }();
@@ -95,7 +95,7 @@
         $log.error('$async expects a function argument, got ' + (typeof cb === 'undefined' ? 'undefined' : (0, _typeof3.default)(cb)));
       }
 
-      return validArgument ? wrapperFn : function () {/* noop */};
+      return validArgument ? wrapper : function () {/* noop */};
     };
   }];
 
