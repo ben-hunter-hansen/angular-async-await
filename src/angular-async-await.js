@@ -15,14 +15,14 @@
  */
 
 
-let $async = ['$rootScope','$log', ($rootScope, $log) => {
+const $async = ['$rootScope','$log', ($rootScope, $log) => {
   "use strict";
 
   return cb => {
 
-    let validArgument = (typeof cb === 'function');
+    const validArgument = (typeof cb === 'function');
 
-    let wrapperFn = async function(...args) {
+    const wrapper = async function(...args) {
       try {
         await cb(...args);
       } catch(e) {
@@ -36,7 +36,7 @@ let $async = ['$rootScope','$log', ($rootScope, $log) => {
       $log.error(`$async expects a function argument, got ${typeof cb}`);
     }
 
-    return validArgument ? wrapperFn : () => {/* noop */}
+    return validArgument ? wrapper : () => {/* noop */}
   };
 }];
 
