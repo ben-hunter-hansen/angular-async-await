@@ -67,13 +67,13 @@ npm install angular-async-await
 
 2.) Import the module
 ```javascript
-import "angular-async-await";
+import angularAsyncAwait from "angular-async-await";
 ```
 
 3.) Add the module to your apps dependency list
 ```javascript
 angular.module('myApp', [
-  'angular-async-await'
+  angularAsyncAwait.name
 ])
 ```
 
