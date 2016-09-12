@@ -24,7 +24,7 @@ const $async = ['$rootScope','$log', ($rootScope, $log) => {
 
     const wrapper = async function(...args) {
       try {
-        await cb(...args);
+        await cb.call(this, ...args);
       } catch(e) {
         $log.error(e);
       } finally {

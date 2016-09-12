@@ -53,41 +53,51 @@
       var validArgument = typeof cb === 'function';
 
       var wrapper = function () {
-        var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
-          var _args = arguments;
+        var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+          var _len,
+              args,
+              _key,
+              _args = arguments;
+
           return _regenerator2.default.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.prev = 0;
-                  _context.next = 3;
-                  return cb.apply(undefined, _args);
 
-                case 3:
-                  _context.next = 8;
+                  for (_len = _args.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                    args[_key] = _args[_key];
+                  }
+
+                  _context.next = 4;
+                  return cb.call.apply(cb, [this].concat(args));
+
+                case 4:
+                  _context.next = 9;
                   break;
 
-                case 5:
-                  _context.prev = 5;
+                case 6:
+                  _context.prev = 6;
                   _context.t0 = _context['catch'](0);
 
                   $log.error(_context.t0);
 
-                case 8:
-                  _context.prev = 8;
+                case 9:
+                  _context.prev = 9;
 
                   $rootScope.$apply();
-                  return _context.finish(8);
+                  return _context.finish(9);
 
-                case 11:
+                case 12:
                 case 'end':
                   return _context.stop();
               }
             }
-          }, _callee, this, [[0, 5, 8, 11]]);
+          }, _callee, this, [[0, 6, 9, 12]]);
         }));
+
         return function wrapper(_x) {
-          return ref.apply(this, arguments);
+          return _ref.apply(this, arguments);
         };
       }();
 
